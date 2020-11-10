@@ -3,12 +3,12 @@ function sym(...args) {
         return args[0].sort()
    }    
    let returnSet = [];
-   args1 = args[0].filter((v,i,a)=>a.indexOf(v)==i)
-   args2 = args[1].filter((v,i,a)=>a.indexOf(v)==i)
+   let args1 = args[0].filter((v,i,a)=>a.indexOf(v)==i)
+   let args2 = args[1].filter((v,i,a)=>a.indexOf(v)==i)
 
 
-   args1Copy = [...args1];
-   args2Copy = [...args2];
+   let args1Copy = [...args1];
+   let args2Copy = [...args2];
    
     for (let i = 0; i < args1.length; i++) {
         for (let j = 0; j < args2.length; j++) {
@@ -20,8 +20,8 @@ function sym(...args) {
     }
     
     returnSet = args1Copy.concat(args2Copy)
-    result = [returnSet, ...args.slice(2)]
+    let result = [returnSet, ...args.slice(2)]
     return sym(...result) 
 }
 
-  console.log(sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]))
+  console.log(sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3]))
