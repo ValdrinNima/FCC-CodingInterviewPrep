@@ -1,6 +1,9 @@
 function insertionSort(arr) {
-	for (let i = 1; i < arr.length; i++) {
-               
+	for (let i = 0; i < arr.length; i++) {
+		while (arr[i + 1] < arr[i] && i + 1 > 0) {
+			[arr[i + 1], arr[i]] = [arr[i], arr[i + 1]];
+			i -= 1;
+		}
 	}
 	return arr;
 }
