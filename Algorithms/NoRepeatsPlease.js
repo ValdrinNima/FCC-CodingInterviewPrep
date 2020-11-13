@@ -14,18 +14,17 @@
 //     }
 //   }
 // }
+let result = [];
 
-function perm(arr) {
+function perm(arr, permutation = []) {
+	if (arr.length == 0) {
+		return result.push(permutation);
+	}
 
-  if (arr.length == 1) {
-    return arr
-  }
-
-  for (let i = 0; i < arr.length; i++) {
-    let permutation = []
-
-    return permutation.push(perm(arr.splice(arr[i], 1)));
-  }
+	for (let i = 0; i < arr.length; i++) {
+    permutation.push(arr[i]);
+    arr.splice(i, 1)
+		return perm(arr, permutation);
+	}
 }
 console.log(perm([1, 2, 3]));
-//  permAlone("aab");
