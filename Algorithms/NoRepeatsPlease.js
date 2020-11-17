@@ -16,17 +16,8 @@
 // }
 let result = [];
 
-function perm(arr, permutation = []) {
-	if (arr.length == 0) {
-		return result.push(permutation);
-	}
+function perm(arr) {
+	
 
-	for (let i = 0; i < arr.length; i++) {
-		permutation.push(arr[i]);
-		let copyArr = [...arr];
-		copyArr.splice(i, 1);
-		perm(copyArr, permutation);
-	}
-	return result
 }
 console.log(perm([1, 2, 3]));
