@@ -4,32 +4,93 @@ import "./App.css";
 
 function App() {
 	const [weather, setWeather] = useState({});
+	const [temp, setTemp] = useState({ celsius: true });
 
 	const fetch_weather = async () => {
-		let longitude = 35;
-		let latitude = 139;
+		let longitude, latitude;
 
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				latitude = position.coords.latitude;
+				longitude = position.coords.longitude;
+
+				setWeather((prevState) => {
+					return {
+						...prevState,
+						longitude: longitude,
+						latitude: latitude,
+					};
+				});
+			});
+		} else {
+			alert("Could not retrieve geolocation");
+		}
 		// fetch weather JSON
-		let query = `api/current?lon=${longitude}&lat=${latitude}`;
+		let lon = weather.longitude;
+		console.log(weather.latitude);
+		let lat = weather.latitude;
+		if (!lon || !lat) {
+			lon = 35;
+			lat = 139;
+		}
+		let query = `api/current?lon=${lon}&lat=${lat}`;
 		let weather_res = await fetch(
 			"https://weather-proxy.freecodecamp.rocks/" + query
 		);
 		let weather_json = await weather_res.json();
-		console.log(weather_json);
 
+		console.log(weather);
 		// set state with weather JSON
-		setWeather((state) => { ...state, location: weather_json.name });
-		setWeather({ ...weather, temperature: weather_json.main.temp });
-		setWeather({
-			...weather,
-			description: weather_json.weather[0].description,
+		setWeather((prevState) => {
+			return {
+				...prevState,
+				location: weather_json.name,
+				temperature: weather_json.main.temp,
+				description: weather_json.weather[0].description,
+			};
 		});
 
-		// fetch weather icon
-		// switch (weather.description)
-		// let icon_res = await fetch(
-		// 	`http://openweathermap.org/img/wn/${weather.location}@2x.png`
-		// );
+		let queryIcon;
+		switch (weather.description) {
+			case "broken clouds": {
+				queryIcon = "04d";
+				break;
+			}
+			case "clear sky": {
+				queryIcon = "01d";
+				break;
+			}
+			case "few clouds": {
+				queryIcon = "02d";
+				break;
+			}
+			case "scattered clouds": {
+				queryIcon = "03d";
+				break;
+			}
+			case "shower rain": {
+				queryIcon = "09d";
+				break;
+			}
+			case "rain": {
+				queryIcon = "10d";
+				break;
+			}
+			default: {
+				queryIcon = "04d";
+			}
+		}
+		let icon_res = await fetch(
+			`http://openweathermap.org/img/wn/${queryIcon}@2x.png`
+		);
+		setWeather((prevState) => {
+			return { ...prevState, iconURL: icon_res.url };
+		});
+	};
+
+	const toFahrenheit = (temp) => {
+		let result = temp * 1.8 + 32;
+		return result.toFixed(2);
 	};
 
 	useEffect(() => {
@@ -37,17 +98,25 @@ function App() {
 	}, []);
 
 	return (
-		<div>
+		<div className="main">
 			<header className="header">
 				<h1>Local Weather</h1>
 			</header>
 			<div className="container">
 				<div className="location">{weather.location}</div>
-				<div className="temperature">{weather.temperature}</div>
+				<div className="temperature">
+					{temp.celsius
+						? weather.temperature
+						: toFahrenheit(weather.temperature)}{" "}
+					{temp.celsius ? "°C" : "°F"}
+				</div>
 				<div>{weather.description}</div>
 				<div className="weather-icon">
-					<img src=""></img>
+					<img src={weather.iconURL}></img>
 				</div>
+				<button onClick={() => setTemp({ celsius: !temp.celsius })}>
+					{temp.celsius ? "to Fahrenheit" : "to Celsius"}
+				</button>
 			</div>
 		</div>
 	);
