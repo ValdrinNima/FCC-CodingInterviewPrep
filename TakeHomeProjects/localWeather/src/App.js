@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import React, { useState, useEffect } from "react";
-import "./App.css";
+// import "./App.css";
 
 function App() {
 	const [weather, setWeather] = useState({});
@@ -112,9 +111,9 @@ function App() {
 				</div>
 				<div>{weather.description}</div>
 				<div className="weather-icon">
-					<img src={weather.iconURL}></img>
+					<img className="icon" src={weather.iconURL}></img>
 				</div>
-				<button onClick={() => setTemp({ celsius: !temp.celsius })}>
+				<button className="temp-button" onClick={() => setTemp({ celsius: !temp.celsius })}>
 					{temp.celsius ? "to Fahrenheit" : "to Celsius"}
 				</button>
 			</div>

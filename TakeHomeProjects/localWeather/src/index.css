@@ -5,6 +5,8 @@ body {
 		"Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	font-family: "Roboto", Arial;
+	font-size: 4rem;
 }
 
 code {
@@ -18,14 +20,49 @@ code {
 	display: block;
 }
 
-body {
-	font-family: "Roboto", Arial;
-	font-size: 4rem;
-}
 
 .main {
 	z-index: 1;
 	display: block;
 	background: url("./weather-images/clear_sky.jpg");
 	background-size: cover;
+	padding-bottom: 2em;
+}
+
+.header {
+	text-align: center;
+	padding: 0.5em 0 0.8em;
+}
+
+.container {
+	margin: 0 auto;
+	width: 30%;
+	border: 1px solid grey;
+	border-radius: 10px;
+	box-shadow: 2px 2px 15px black;
+	padding: 0.5em;
+	backdrop-filter: blur(5px);
+}
+
+
+.icon {
+	width: 25%;
+	height: 100%;
+}
+
+.temp-button {
+	font-family: "Roboto";
+	border: 1px solid black;
+	font-size: 1.3rem;
+	border-radius: 5px;
+	font-size: 1.2rem;
+	padding: 0.3em;
+	background-color: transparent;
+	font-weight: bold;
+	color: black;
+}
+
+.temp-button:hover {
+	cursor: pointer;
+	opacity: 0.9;
 }
