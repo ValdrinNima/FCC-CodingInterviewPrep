@@ -16,8 +16,29 @@
 // }
 let result = [];
 
-function perm(arr) {
-	
-
+function perm(arr, permutation=[]) {
+    let result = []
+    
+    if(arr.length == 0) {
+        console.log(permutation)
+       return permutation 
+    }
+    
+    for (let i = 0; i < arr.length; i++) {
+        if (arr.length != 0) {
+            let newArr = [...arr]
+            permutation.push(arr[i])
+            newArr.splice(i, 1)
+            result.push(perm(newArr, permutation))
+        } else {
+            let newArr = [...arr]
+            permutation.push(arr[i])
+            newArr.splice(i, 1)
+            return perm(newArr, permutation)
+        }
+    }
+    return result
 }
+
+
 console.log(perm([1, 2, 3]));
