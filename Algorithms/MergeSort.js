@@ -1,4 +1,11 @@
-function mergeSort(arr) {}
+function mergeSort(arr) {
+	let arr1 = arr.slice(0, Math.floor(arr.length / 2));
+	let arr2 = arr.slice(Math.floor(arr.length / 2));
+	if (arr1.length == 1 || arr2.length == 1) {
+		return merge(arr1, arr2);
+	}
+	return merge(mergeSort(arr1), mergeSort(arr2));
+}
 
 function merge(arr1, arr2) {
 	let result = [];
@@ -17,5 +24,26 @@ function merge(arr1, arr2) {
 
 	return result;
 }
+// console.log(merge([1, 2, 3], [2, 6, 7]));
 
-mergeSort([1, 4, 2, 8, 345, 123, 43, 32, 5643, 63, 123, 43, 2, 55, 1, 234, 92]);
+console.log(
+	mergeSort([
+		1,
+		4,
+		2,
+		8,
+		345,
+		123,
+		43,
+		32,
+		5643,
+		63,
+		123,
+		43,
+		2,
+		55,
+		1,
+		234,
+		92,
+	])
+);
