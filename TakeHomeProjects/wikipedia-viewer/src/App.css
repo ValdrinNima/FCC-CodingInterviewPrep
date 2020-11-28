@@ -20,15 +20,24 @@
 	cursor: pointer;
 }
 /* Searchbar */
+.search-container {
+  margin: 0 auto;
+  width: 170px;
+}
 .search-icon-off {
+  /* display: none;
 	border-radius: 100%;
 	border: 5px solid red;
 	width: 25px;
-	height: 25px;
-	display: flex;
+	height: 25px; */
+  display: flex;
 	justify-self: start;
 }
 
+.article-list {
+  margin: 0 auto;
+  width: 500px;
+}
 /* .App {
   text-align: center;
 }
