@@ -1,0 +1,88 @@
+/* #1F1F23 Background Color*/
+/* #9147FF Twich color */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #0e0e10;
+}
+
+header {
+	text-align: center;
+	background-color: #9147ff;
+	border-radius: 10px;
+	font-size: 3rem;
+	font-weight: bold;
+	color: white;
+	padding: 0.3em;
+	margin: 0 auto 1em;
+	width: 60%;
+}
+
+.wrapper {
+	padding: 2em;
+	margin: 0 auto;
+	width: 70%;
+	background-color: #1f1f23;
+}
+
+img {
+	width: 100px;
+	height: 100px;
+	border-radius: 100px;
+}
+
+a {
+	color: white;
+}
+
+a:hover {
+	font-size: 1rem;
+	color: #a56aff;
+}
+
+.container {
+	margin: 0 auto 1em;
+	width: 75%;
+	color: white;
+	z-index: -2;
+}
+
+.stream-container {
+	padding: 1em 2em;
+	margin-bottom: 3em;
+	display: flex;
+	justify-content: space-between;
+	z-index: 1;
+	border: 1px solid white;
+}
+
+/* .stream-container::after {
+	content: "";
+	width: 100px;
+	height: 100px;
+	z-index: 1;
+	background-color: #9147ff;
+} */
+
+.stream-title {
+	font-size: 2rem;
+	font-weight: 500;
+	letter-spacing: 1px;
+	margin-bottom: 0.2em;
+}
+
+.steam-description {
+	font-size: 1.2rem;
+	margin-bottom: 0.5em;
+}
+
+.flex {
+	display: flex;
+	flex-direction: column;
+	width: 75%;
+}
