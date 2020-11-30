@@ -4,6 +4,7 @@ import Article from "./Article";
 const Searchbar = () => {
 	const [input, setInput] = useState("");
 	const [articleList, setArticleList] = useState("");
+	const [searchActive, setSearchInactive] = useState(false);
 
 	const fetchRandomArticles = (e) => {
 		e.preventDefault();
@@ -25,18 +26,27 @@ const Searchbar = () => {
 		setInput(e.target.value);
 	};
 
+	const activateSearch = () => {
+		setSearchInactive(!searchActive);
+	};
+
 	return (
-		<div className="search-container">
-			<form onSubmit={fetchRandomArticles}>
-				<div className="search-icon-off">
+		<>
+			<div className="search-container">
+				<form className="search-form" onSubmit={fetchRandomArticles}>
 					<input
+						onClick={activateSearch}
+						className={
+							"search" + (searchActive ? "-active" : "")
+						}
 						onChange={updateInput}
 						type="text"
-						value={input}
+						value={(searchActive ? input : "")}
 					></input>
-				</div>
-			</form>
-			<div className="articles-list">
+					<div className={"glass-handle" + (searchActive ? "-active" : "")}></div>
+				</form>
+			</div>
+			<div className="article-list">
 				{Object.keys(articleList).map((article) => {
 					return (
 						<Article
@@ -46,7 +56,7 @@ const Searchbar = () => {
 					);
 				})}
 			</div>
-		</div>
+		</>
 	);
 };
 

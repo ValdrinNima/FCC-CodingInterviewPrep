@@ -9,7 +9,7 @@ const RandomArticle = () => {
 	return (
 		<div>
 			<p onClick={openRandomArticle} className="random-article-link">
-				Click here for a random article
+				<span>Click here for a random article</span>
 			</p>
 		</div>
 	);
