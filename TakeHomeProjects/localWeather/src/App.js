@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import "./App.css";
+import "./App.css";
 
 function App() {
 	const [weather, setWeather] = useState({});
@@ -26,7 +26,6 @@ function App() {
 		}
 		// fetch weather JSON
 		let lon = weather.longitude;
-		console.log(weather.latitude);
 		let lat = weather.latitude;
 		if (!lon || !lat) {
 			lon = 35;
@@ -92,12 +91,23 @@ function App() {
 		return result.toFixed(2);
 	};
 
+	const setBackground = (description) => {
+		console.log(weather.description);
+		if (description.includes("cloud")) {
+			return "cloud";
+		} else if (description.includes("clear")) {
+			return "clear-sky";
+		} else {
+			return "rain";
+		}
+	};
+
 	useEffect(() => {
 		fetch_weather();
-	}, []);
+	}, [weather]);
 
 	return (
-		<div className="main">
+		<div className={`main ${setBackground(weather.description)}`}>
 			<header className="header">
 				<h1>Local Weather</h1>
 			</header>
@@ -109,11 +119,14 @@ function App() {
 						: toFahrenheit(weather.temperature)}{" "}
 					{temp.celsius ? "°C" : "°F"}
 				</div>
-				<div>{weather.description}</div>
+				<div className="weather-description">{weather.description}</div>
 				<div className="weather-icon">
 					<img className="icon" src={weather.iconURL}></img>
 				</div>
-				<button className="temp-button" onClick={() => setTemp({ celsius: !temp.celsius })}>
+				<button
+					className="temp-button"
+					onClick={() => setTemp({ celsius: !temp.celsius })}
+				>
 					{temp.celsius ? "to Fahrenheit" : "to Celsius"}
 				</button>
 			</div>
