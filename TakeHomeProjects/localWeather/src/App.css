@@ -14,8 +14,7 @@
 .clear-sky, .sky, .clear {
 	background: url("./weather-images/cloud.jpg");
 }
-.clouds,
-.overcastlouds {
+.clouds {
 	background: url("./weather-images/cloud.jpg");
 }
 .rain {

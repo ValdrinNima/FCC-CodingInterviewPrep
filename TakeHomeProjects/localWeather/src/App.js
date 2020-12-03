@@ -91,23 +91,12 @@ function App() {
 		return result.toFixed(2);
 	};
 
-	const setBackground = (description) => {
-		console.log(weather.description);
-		if (description.includes("cloud")) {
-			return "cloud";
-		} else if (description.includes("clear")) {
-			return "clear-sky";
-		} else {
-			return "rain";
-		}
-	};
-
 	useEffect(() => {
 		fetch_weather();
-	}, [weather]);
+	}, []);
 
 	return (
-		<div className={`main ${setBackground(weather.description)}`}>
+		<div className={`main ${weather.description}`}>
 			<header className="header">
 				<h1>Local Weather</h1>
 			</header>
