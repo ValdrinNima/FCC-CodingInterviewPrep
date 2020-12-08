@@ -1,26 +1,47 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
-import { Link } from "react-router-dom";
 
-function ChooseMode() {
-	const [gameMode, setGameMode] = useState();
+function ChooseMode({
+	setGameSettings,
+	shouldComponentsRender,
+	setShouldComponentsRender,
+}) {
+	const showThis = shouldComponentsRender.ChooseMode
+		? "menu-container display-block"
+		: "menu-container display-none";
 
 	return (
-		<div className="wrapper">
-			<div className="menu-container">
-				<p>How do you want to play?</p>
-				<div className="pick-something">
-					<Link to="/chooseSign">
-						<p onClick={() => setGameMode("onePlayer")}>
-							One Player
-						</p>
-					</Link>
-					<Link to="/chooseSign">
-						<p onClick={() => setGameMode("twoPlayer")}>
-							Two Player
-						</p>
-					</Link>
-				</div>
+		<div className={showThis}>
+			<p>How do you want to play?</p>
+			<div className="pick-something">
+				<p
+					onClick={() => {
+						setShouldComponentsRender({
+							ChooseMode: false,
+							ChooseSign: true,
+							GameBoard: false,
+						});
+						setGameSettings({
+							players: "onePlayer",
+						});
+					}}
+				>
+					One Player
+				</p>
+				<p
+					onClick={() => {
+						setShouldComponentsRender({
+							ChooseMode: false,
+							ChooseSign: true,
+							GameBoard: false,
+						});
+						setGameSettings({
+							players: "twoPlayer",
+						});
+					}}
+				>
+					Two Player
+				</p>
 			</div>
 		</div>
 	);

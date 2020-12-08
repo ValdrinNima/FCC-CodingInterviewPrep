@@ -1,7 +1,29 @@
+let ai = "⨉";
+let human = "○";
+function bestMove(board, ai = "⨉", human = "○") {
+	let bestScore = -Infinity;
+	let move;
+	for (let i = 0; i < 3; i++) {
+		for (let j = 0; j < 3; j++) {
+			if (board[i][j] == "") {
+				board[i][j] = ai;
+				let score = minimax(board, 0, false, ai, human);
+				board[i][j] = "";
+				if (score > bestScore) {
+					bestScore = score;
+					move = { row: i, col: j };
+				}
+			}
+		}
+	}
+	return move;
+}
+
 const checkWinner = (board) => {
 	let winner = null;
 	const transpose = (m) => m[0].map((x, i) => m.map((x) => x[i]));
 	let boardTransposed = transpose(board);
+	// console.log({ board, boardTransposed });
 
 	// check horizontal
 	board.forEach((row) => {
@@ -12,8 +34,11 @@ const checkWinner = (board) => {
 
 	// check vertical
 	boardTransposed.forEach((row) => {
+		// console.log({ row });
 		if (row.every((v) => v === row[0] && v !== "")) {
 			winner = row[0];
+			// console.log({ winner });
+			// console.log({ board });
 		}
 	});
 
@@ -50,12 +75,14 @@ const checkWinner = (board) => {
 	}
 };
 
-function minimax(board, isMaximizing, ai, human) {
-	let scores = {};
-	scores["tie"] = 0;
-	scores[ai] = 10;
-	scores[human] = -10;
+function minimax(board, depth, isMaximizing, ai, human) {
+	let scores = {
+		tie: 0,
+		"⨉": 1,
+		"○": -1,
+	};
 	let result = checkWinner(board);
+	// console.log(result);
 	if (result !== null) {
 		return scores[result];
 	}
@@ -65,9 +92,9 @@ function minimax(board, isMaximizing, ai, human) {
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 3; j++) {
 				// Is the spot available?
-				if (board[i][j] === "") {
+				if (board[i][j] == "") {
 					board[i][j] = ai;
-					let score = minimax(board, false, ai, human);
+					let score = minimax(board, depth + 1, false, ai, human);
 					board[i][j] = "";
 					bestScore = Math.max(score, bestScore);
 				}
@@ -79,9 +106,9 @@ function minimax(board, isMaximizing, ai, human) {
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 3; j++) {
 				// Is the spot available?
-				if (board[i][j] === "") {
+				if (board[i][j] == "") {
 					board[i][j] = human;
-					let score = minimax(board, true, ai, human);
+					let score = minimax(board, depth + 1, true, ai, human);
 					board[i][j] = "";
 					bestScore = Math.min(score, bestScore);
 				}
@@ -91,39 +118,10 @@ function minimax(board, isMaximizing, ai, human) {
 	}
 }
 
-function bestMove(board, ai, human) {
-	let bestScore = -Infinity;
-	let move;
-	for (let i = 0; i < 3; i++) {
-		for (let j = 0; j < 3; j++) {
-			if (board[i][j] === "") {
-				board[i][j] = ai;
-				let score = minimax(board, false, ai, human);
-				board[i][j] = "";
-				if (score > bestScore) {
-					bestScore = score;
-					move = { row: i, col: j };
-				}
-			}
-		}
-	}
-	return move;
-}
-
 console.log(
-	bestMove(
-		[
-			["○", "", ""],
-			["", "○", ""],
-			["○", "", ""],
-		],
-		"○",
-		"⨉"
-	)
+	bestMove([
+		["⨉", "", ""],
+		["⨉", "⨉", ""],
+		["", "", ""],
+	])
 );
-// ⨉○
-// [
-// 		["⨉", "○", "○"],
-// 		["○", "⨉", "○"],
-// 		["○", "⨉", "○"],
-// 	]
