@@ -55,6 +55,7 @@ function minimax(board, isMaximizing, ai, human) {
 	scores["tie"] = 0;
 	scores[ai] = 10;
 	scores[human] = -10;
+	console.log(scores);
 	let result = checkWinner(board);
 	if (result !== null) {
 		return scores[result];
