@@ -22,6 +22,7 @@
 	padding: 1.3em;
 	justify-content: space-around;
 	align-content: space-around;
+	z-index: -2;
 }
 
 .button-green {
@@ -101,6 +102,7 @@ h1 {
 	position: relative;
 	content: "COUNT";
 	top: 15px;
+	font-weight: bold;
 	left: 2px;
 	font-size: 0.8rem;
 }
@@ -118,6 +120,7 @@ h1 {
 	content: "START";
 	position: relative;
 	top: 32.5px;
+	font-weight: bold;
 	left: -8px;
 	font-size: 0.8rem;
 	color: white;
@@ -138,6 +141,7 @@ h1 {
 	position: relative;
 	top: 32.5px;
 	left: -8px;
+	font-weight: bold;
 	font-size: 0.8rem;
 	color: white;
 }
@@ -152,13 +156,45 @@ h1 {
 }
 
 .button-power {
-	margin: 1.7em 1em 0;
+	margin: 2.2em 1em 0;
 	width: 50px;
 	height: 20px;
-
+	cursor: pointer;
 	background-color: #333333;
 }
 
+.button-power::before {
+	content: "ON";
+	position: relative;
+	left: -25px;
+	top: -4px;
+	font-weight: bold;
+	font-size: 0.8rem;
+	color: white;
+}
+.button-power::after {
+	content: "OFF";
+	position: relative;
+	font-weight: bold;
+	left: 35px;
+	top: -4px;
+	font-size: 0.8rem;
+	color: white;
+}
 button:focus {
 	display: none;
+}
+
+.clicked {
+	animation: fade-in-keyframes 1s;
+}
+@keyframes fade-in-keyframes {
+	from {
+		opacity: 0.5;
+		transform: scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
