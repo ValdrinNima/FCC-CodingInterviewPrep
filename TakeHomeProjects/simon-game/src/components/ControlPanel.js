@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function ControlPanel({ setGameState, gameState }) {
 	return (
@@ -8,7 +8,9 @@ function ControlPanel({ setGameState, gameState }) {
 			</h1>
 			<div className="control-panel">
 				<div className="count-screen">
-					<p>{!gameState.power ? "--" : gameState.count.toString()}</p>
+					<p>
+						{!gameState.power ? "--" : gameState.count.toString()}
+					</p>
 				</div>
 				<button
 					disabled={!gameState.power}

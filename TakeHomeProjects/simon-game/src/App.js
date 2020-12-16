@@ -14,7 +14,7 @@ function App() {
 		"yellow-clicked": false,
 		"blue-clicked": false,
 	});
-	const buttonRefrences = {
+	const buttonReferences = {
 		green: greenButton,
 		red: redButton,
 		yellow: yellowButton,
@@ -37,26 +37,39 @@ function App() {
 	const [gameSeries, setGameSeries] = useState([
 		"lets goooo",
 		"green",
+		"yellow",
 		"blue",
 		"red",
 		"yellow",
-		"blue",
+		"green",
+		"green",
+		"yellow",
 	]);
 
 	const playAudio = (e) => {
 		let color = e.target.id;
+		// if (gameState.playerTrun) {
+		// 	setPlayerSeries((prevState) => {
+		// 		let result = [...prevState];
+		// 		result.push(color);
+		// 		console.log("Hello");
+		// 		return result;
+		// 	});
+		// }
+		console.log(color);
+		console.log(playerSeries);
 		let sound = new Audio(audio[color]);
 		sound.play();
 	};
 
 	const computerMove = (colorArray) => {
 		console.log(colorArray);
-		for (let i = 1; i <= colorArray.length; i++) {
+		for (let i = 0; i < colorArray.length; i++) {
 			computerExecuteMove(i);
 		}
 		function computerExecuteMove(i) {
 			setTimeout(function () {
-				switch (colorArray[i - 1]) {
+				switch (colorArray[i]) {
 					case "green":
 						greenButton.current.click();
 						break;
@@ -72,47 +85,46 @@ function App() {
 					default:
 						console.log("Wrong color");
 				}
+
+				// On the last button press update gameState
+				if (i + 1 === colorArray.length) {
+					setGameState((prevState) => {
+						return {
+							...prevState,
+							playerTurn: !prevState.playerTurn,
+							count:
+								prevState.count % 10 === 0
+									? "0" + prevState.count.toString()
+									: prevState.count.toString(),
+						};
+					});
+				}
 			}, 1500 * i);
 		}
 	};
 
-	const playError = () => {
-		return;
-	};
-
 	useEffect(() => {
 		if (gameState.start && !gameState.playerTurn) {
+			// Add a new color to the gameSeries
 			setGameSeries((prevState) => {
 				const colorArray = ["green", "red", "yellow", "blue"];
 				let newColor =
 					colorArray[Math.floor(Math.random() * colorArray.length)];
-				computerMove([...prevState, newColor]);
 				return [...prevState, newColor];
 			});
-			setGameState((prevState) => {
-				return {
-					...prevState,
-					playerTurn: !prevState.playerTurn,
-					count:
-						prevState.count % 10 === 0
-							? "0" + prevState.count.toString()
-							: prevState.count.toString(),
-				};
-			});
+			// After adding new button computer plays series
+			computerMove(gameSeries);
 		}
-		if (gameState.start && gameState.playerTurn) {
-			function playerTookTooLong() {
-				alert("HELLOOOOO PLAYY ");
-			}
-			let timer = setTimeout(playerTookTooLong, 5000);
-		}
-	}, [gameState, playerSeries]);
+	}, [gameState]);
 
-	// useEffect(() => {
-	// 	if (gameState.start && gameState.playerTurn) {
-	// 		let timer = setTimeout(playerTookTooLong, 5000);
-	// 	}
-	// }, [playerSeries]);
+	useEffect(() => {
+		// if (gameState.start && gameState.playerTurn) {
+		// 	function playerTookTooLong() {
+		// 		alert("HELLOOOOO PLAYY ");
+		// 	}
+		// 	let timer = setTimeout(playerTookTooLong, 5000);
+		// }
+	}, [gameState, playerSeries]);
 
 	return (
 		<div className="wrapper">
@@ -121,109 +133,20 @@ function App() {
 				gameState={gameState}
 			></ControlPanel>
 			<div className="game-container">
-				{/* {["green", "red", "yellow", "blue"].map((color) => {
+				{["green", "red", "yellow", "blue"].map((color) => {
 					return (
 						<Button
-							key={color }
-							color={color}
+							setClickAnimation={setClickAnimation}
+							clickAnimation={clickAnimation}
+							setPlayerSeries={setPlayerSeries}
 							playAudio={playAudio}
 							gameState={gameState}
-							ref={buttonRefrences[color]}
+							key={color}
+							color={color}
+							ref={buttonReferences[color]}
 						></Button>
 					);
-				})} */}
-				<button
-					id="green"
-					disabled={!gameState.playerTurn}
-					ref={greenButton}
-					className={
-						clickAnimation["green-clicked"]
-							? "button-green clicked"
-							: "button-green"
-					}
-					onClick={(e) => {
-						playAudio(e);
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"green-clicked": true,
-						}));
-					}}
-					onAnimationEnd={() => {
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"green-clicked": false,
-						}));
-					}}
-				></button>
-				<button
-					id="red"
-					disabled={!gameState.playerTurn}
-					ref={redButton}
-					onClick={(e) => {
-						playAudio(e);
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"red-clicked": true,
-						}));
-					}}
-					onAnimationEnd={() => {
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"red-clicked": false,
-						}));
-					}}
-					className={
-						clickAnimation["red-clicked"]
-							? "button-red clicked"
-							: "button-red "
-					}
-				></button>
-				<button
-					id="yellow"
-					disabled={!gameState.playerTurn}
-					ref={yellowButton}
-					onClick={(e) => {
-						playAudio(e);
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"yellow-clicked": true,
-						}));
-					}}
-					onAnimationEnd={() => {
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"yellow-clicked": false,
-						}));
-					}}
-					className={
-						clickAnimation["yellow-clicked"]
-							? "button-yellow clicked"
-							: "button-yellow"
-					}
-				></button>
-				<button
-					id="blue"
-					disabled={!gameState.playerTurn}
-					ref={blueButton}
-					onClick={(e) => {
-						playAudio(e);
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"blue-clicked": true,
-						}));
-					}}
-					onAnimationEnd={() => {
-						setClickAnimation((prevState) => ({
-							...prevState,
-							"blue-clicked": false,
-						}));
-					}}
-					className={
-						clickAnimation["blue-clicked"]
-							? "button-blue clicked"
-							: "button-blue"
-					}
-				></button>
+				})}
 			</div>
 		</div>
 	);

@@ -11,6 +11,10 @@
 	height: 100vh;
 }
 
+
+
+/* *****BUTTONS *******  */
+
 .game-container {
 	background-color: #333333;
 	border-radius: 100%;
@@ -22,7 +26,7 @@
 	padding: 1.3em;
 	justify-content: space-around;
 	align-content: space-around;
-	z-index: -2;
+	/* z-index: -1; */
 }
 
 .button-green {
@@ -31,6 +35,8 @@
 	height: 200px;
 	border-top-left-radius: 100%;
 	background-color: #00a74a;
+	cursor: pointer;
+	/* z-index: -2; */
 }
 
 .button-red {
@@ -39,6 +45,8 @@
 	height: 200px;
 	background-color: #9f0f17;
 	border-top-right-radius: 100%;
+	cursor: pointer;
+	/* z-index: -2; */
 }
 .button-yellow {
 	border: none;
@@ -46,6 +54,7 @@
 	height: 200px;
 	background-color: #cca707;
 	border-bottom-left-radius: 100%;
+	cursor: pointer;
 }
 .button-blue {
 	border: none;
@@ -53,11 +62,16 @@
 	height: 200px;
 	background-color: #094a8f;
 	border-bottom-right-radius: 100%;
+	cursor: pointer;
 }
 
 button:hover {
 	cursor: pointer;
 }
+
+
+
+/* ***** CONTROL-PANEL ******* */
 
 .control-panel-container {
 	position: absolute;
@@ -66,6 +80,7 @@ button:hover {
 	border-radius: 100%;
 	background-color: rgb(180, 180, 180);
 	border: 15px solid #333333;
+	z-index: 2;
 }
 
 h1 {
@@ -184,6 +199,9 @@ h1 {
 button:focus {
 	display: none;
 }
+
+
+/* **** ANIMATION ***** */
 
 .clicked {
 	animation: fade-in-keyframes 1s;
