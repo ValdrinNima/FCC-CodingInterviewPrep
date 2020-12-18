@@ -1,6 +1,18 @@
 import React from "react";
 
 function ControlPanel({ setGameState, gameState }) {
+	const displayCount = (count) => {
+		if (!gameState.power) {
+			return "--";
+		} else {
+			if (count % 10 !== 0) {
+				return `0${count}`;
+			} else {
+				return `${count}`;
+			}
+		}
+	};
+
 	return (
 		<div className="control-panel-container">
 			<h1>
@@ -8,9 +20,7 @@ function ControlPanel({ setGameState, gameState }) {
 			</h1>
 			<div className="control-panel">
 				<div className="count-screen">
-					<p>
-						{!gameState.power ? "--" : gameState.count.toString()}
-					</p>
+					<p>{displayCount(gameState.count)}</p>
 				</div>
 				<button
 					disabled={!gameState.power}

@@ -26,6 +26,7 @@ function App() {
 		strict: false,
 		count: 0,
 		playerTurn: false,
+		playerIndex: 0,
 	});
 	const [audio, setAudio] = useState({
 		green: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
@@ -35,35 +36,53 @@ function App() {
 	});
 	const [playerSeries, setPlayerSeries] = useState([]);
 	const [gameSeries, setGameSeries] = useState([
-		"lets goooo",
-		"green",
-		"yellow",
-		"blue",
-		"red",
-		"yellow",
-		"green",
-		"green",
-		"yellow",
+		// "green",
+		// "blue",
+		// "yellow",
+		// "blue",
+		// "blue",
+		// "red",
+		// "red",
 	]);
+
+	let playerError = false;
+
+	let arraysMatch = function (arr1, arr2) {
+		// Check if the arrays are the same length
+		if (arr1.length !== arr2.length) return false;
+
+		// Check if all items exist and are in the same order
+		for (let i = 0; i < arr1.length; i++) {
+			if (arr1[i] !== arr2[i]) return false;
+		}
+
+		// Otherwise, return true
+		return true;
+	};
+
+	const addNewColor = () => {
+		let newArray;
+		let colors = ["green", "red", "yellow", "blue"];
+		let newColor = colors[Math.floor(Math.random() * colors.length)];
+		let oldArray = [...gameSeries];
+		newArray = [...oldArray, newColor];
+		setGameSeries(newArray);
+		return newArray;
+	};
 
 	const playAudio = (e) => {
 		let color = e.target.id;
-		// if (gameState.playerTrun) {
-		// 	setPlayerSeries((prevState) => {
-		// 		let result = [...prevState];
-		// 		result.push(color);
-		// 		console.log("Hello");
-		// 		return result;
-		// 	});
-		// }
 		console.log(color);
 		console.log(playerSeries);
 		let sound = new Audio(audio[color]);
 		sound.play();
 	};
 
+	function playerTookTooLong() {
+		alert("HELLOOOOO PLAYY ");
+	}
+
 	const computerMove = (colorArray) => {
-		console.log(colorArray);
 		for (let i = 0; i < colorArray.length; i++) {
 			computerExecuteMove(i);
 		}
@@ -92,39 +111,81 @@ function App() {
 						return {
 							...prevState,
 							playerTurn: !prevState.playerTurn,
-							count:
-								prevState.count % 10 === 0
-									? "0" + prevState.count.toString()
-									: prevState.count.toString(),
+							count: prevState.count + 1,
 						};
 					});
 				}
-			}, 1500 * i);
+			}, 1500 * (i + 1));
 		}
 	};
 
 	useEffect(() => {
 		if (gameState.start && !gameState.playerTurn) {
-			// Add a new color to the gameSeries
-			setGameSeries((prevState) => {
-				const colorArray = ["green", "red", "yellow", "blue"];
-				let newColor =
-					colorArray[Math.floor(Math.random() * colorArray.length)];
-				return [...prevState, newColor];
-			});
+			let newArray;
+			if (!playerError) {
+				newArray = addNewColor();
+			} else {
+				newArray = gameSeries;
+			}
+			console.log(newArray);
 			// After adding new button computer plays series
-			computerMove(gameSeries);
+			computerMove(newArray);
 		}
 	}, [gameState]);
 
 	useEffect(() => {
-		// if (gameState.start && gameState.playerTurn) {
-		// 	function playerTookTooLong() {
-		// 		alert("HELLOOOOO PLAYY ");
-		// 	}
-		// 	let timer = setTimeout(playerTookTooLong, 5000);
-		// }
-	}, [gameState, playerSeries]);
+		if (gameState.playerTurn) {
+			// set a timout for inactivity
+			// let timer = setTimeout(() => {
+			// 	alert("aYYY WHat up");
+			// }, 2000);
+
+			// Check if count is 20
+			if (gameState.count === 20) {
+				alert("Game Over");
+			}
+
+			// Increase playerIndex by one
+			setGameState((prevState) => ({
+				...prevState,
+				playerIndex: prevState.playerIndex + 1,
+			}));
+
+			// Runs everytime player presses button when players turn
+
+			// did player enter color correctly
+			if (
+				gameSeries[gameState.playerIndex] ===
+				playerSeries[gameState.playerIndex]
+			) {
+				console.log("correct");
+				// clearTimeout(timer);
+			} else {
+				console.log("INCORRECT");
+				// clearTimeout(timer);
+				setPlayerSeries((prevState) => Array(0));
+				playerError = true;
+				setGameState((prevState) => ({
+					...prevState,
+					playerIndex: 0,
+					playerTurn: !prevState.playerTurn,
+				}));
+			}
+
+			playerError = false;
+
+			// Did player enter all colors correctly
+			if (arraysMatch(playerSeries, gameSeries)) {
+				alert("YOU WON");
+				setPlayerSeries((prevState) => []);
+				setGameState((prevState) => ({
+					...prevState,
+					playerIndex: 0,
+					playerTurn: !prevState.playerTurn,
+				}));
+			}
+		}
+	}, [gameState]);
 
 	return (
 		<div className="wrapper">
@@ -139,6 +200,7 @@ function App() {
 							setClickAnimation={setClickAnimation}
 							clickAnimation={clickAnimation}
 							setPlayerSeries={setPlayerSeries}
+							playerSeries={playerSeries}
 							playAudio={playAudio}
 							gameState={gameState}
 							key={color}

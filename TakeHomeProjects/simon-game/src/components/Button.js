@@ -8,13 +8,13 @@ const Button = React.forwardRef((props, ref) => {
 		clickAnimation,
 		setClickAnimation,
 		setPlayerSeries,
+		playerSeries,
 	} = props;
 
 	const addToPlayerSeries = (e) => {
 		setPlayerSeries((prevState) => {
 			let result = [...prevState];
 			result.push(e.target.id);
-			console.log("Hello");
 			return result;
 		});
 	};
@@ -30,10 +30,8 @@ const Button = React.forwardRef((props, ref) => {
 					: "button-" + color
 			}
 			onClick={(e) => {
-				console.log(ref.current);
-				playAudio(e);
-				console.log(e.target.className);
 				gameState.playerTurn && addToPlayerSeries(e);
+				playAudio(e);
 				setClickAnimation((prevState) => {
 					let animation = `${color}-clicked`;
 					let result = { ...prevState };
