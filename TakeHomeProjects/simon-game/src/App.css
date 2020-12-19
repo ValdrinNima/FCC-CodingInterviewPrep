@@ -110,6 +110,9 @@ h1 {
 	text-align: center;
 }
 
+.count-message {
+}
+
 .count-screen::after {
 	position: relative;
 	content: "COUNT";
@@ -173,6 +176,21 @@ h1 {
 	height: 20px;
 	cursor: pointer;
 	background-color: #333333;
+	position: relative;
+}
+
+.control-panel-switch {
+	width: 20px;
+	height: 15px;
+	background-color: #3193de;
+	bottom: 2.5px;
+	left: 2px;
+	position: absolute;
+	transition: all 0.1s ease-in;
+}
+
+.switch-on {
+	left: 27px;
 }
 
 .button-power::before {
@@ -210,5 +228,28 @@ button:focus {
 	to {
 		opacity: 1;
 		transform: scale(1);
+	}
+}
+
+.error {
+	animation: blinking-keyframes 3s;
+}
+
+@keyframes blinking-keyframes {
+	25% {
+		opacity: 0;
+		color: red;
+	}
+	50% {
+		opacity: 1;
+		color: red;
+	}
+	75% {
+		opacity: 0;
+		color: red;
+	}
+	100% {
+		opacity: 1;
+		color: red;
 	}
 }

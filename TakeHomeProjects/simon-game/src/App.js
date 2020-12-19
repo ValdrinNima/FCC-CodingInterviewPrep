@@ -27,6 +27,7 @@ function App() {
 		count: 0,
 		playerTurn: false,
 		playerIndex: 0,
+		playerError: false,
 	});
 	const [audio, setAudio] = useState({
 		green: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
@@ -44,19 +45,13 @@ function App() {
 		// "red",
 		// "red",
 	]);
-
-	let playerError = false;
+	const playerInput = useRef(0);
 
 	let arraysMatch = function (arr1, arr2) {
-		// Check if the arrays are the same length
 		if (arr1.length !== arr2.length) return false;
-
-		// Check if all items exist and are in the same order
 		for (let i = 0; i < arr1.length; i++) {
 			if (arr1[i] !== arr2[i]) return false;
 		}
-
-		// Otherwise, return true
 		return true;
 	};
 
@@ -84,9 +79,14 @@ function App() {
 
 	const computerMove = (colorArray) => {
 		for (let i = 0; i < colorArray.length; i++) {
-			computerExecuteMove(i);
+			let delay = 0;
+			// If player made an error add a delay
+			if (gameState.playerError) {
+				delay = 1500;
+			}
+			computerExecuteMove(i, delay);
 		}
-		function computerExecuteMove(i) {
+		function computerExecuteMove(i, delay) {
 			setTimeout(function () {
 				switch (colorArray[i]) {
 					case "green":
@@ -107,25 +107,36 @@ function App() {
 
 				// On the last button press update gameState
 				if (i + 1 === colorArray.length) {
-					setGameState((prevState) => {
-						return {
-							...prevState,
-							playerTurn: !prevState.playerTurn,
-							count: prevState.count + 1,
-						};
-					});
+					console.log("This is " + !gameState.playerError);
+					if (!gameState.playerError) {
+						setGameState((prevState) => {
+							return {
+								...prevState,
+								playerTurn: !prevState.playerTurn,
+							};
+						});
+					} else {
+						setGameState((prevState) => {
+							return {
+								...prevState,
+								playerTurn: !prevState.playerTurn,
+								playerError: false,
+								count: prevState.count,
+							};
+						});
+					}
 				}
-			}, 1500 * (i + 1));
+			}, 1500 * (i + 1) + delay);
 		}
 	};
 
 	useEffect(() => {
 		if (gameState.start && !gameState.playerTurn) {
 			let newArray;
-			if (!playerError) {
+			if (!gameState.playerError || gameSeries.length === 0) {
 				newArray = addNewColor();
 			} else {
-				newArray = gameSeries;
+				newArray = [...gameSeries];
 			}
 			console.log(newArray);
 			// After adding new button computer plays series
@@ -142,7 +153,7 @@ function App() {
 
 			// Check if count is 20
 			if (gameState.count === 20) {
-				alert("Game Over");
+				alert("You won");
 			}
 
 			// Increase playerIndex by one
@@ -150,6 +161,8 @@ function App() {
 				...prevState,
 				playerIndex: prevState.playerIndex + 1,
 			}));
+
+			playerInput.current = playerInput.current + 1;
 
 			// Runs everytime player presses button when players turn
 
@@ -160,38 +173,51 @@ function App() {
 			) {
 				console.log("correct");
 				// clearTimeout(timer);
-			} else {
+			}
+			// STRICT MODE
+			else if (gameState.strict) {
 				console.log("INCORRECT");
 				// clearTimeout(timer);
 				setPlayerSeries((prevState) => Array(0));
-				playerError = true;
+				setGameSeries([]);
 				setGameState((prevState) => ({
 					...prevState,
+					count: 0,
+					playerError: true,
 					playerIndex: 0,
 					playerTurn: !prevState.playerTurn,
 				}));
-			}
-
-			playerError = false;
-
-			// Did player enter all colors correctly
-			if (arraysMatch(playerSeries, gameSeries)) {
-				alert("YOU WON");
+			} else {
 				setPlayerSeries((prevState) => []);
 				setGameState((prevState) => ({
 					...prevState,
+					playerError: true,
 					playerIndex: 0,
 					playerTurn: !prevState.playerTurn,
 				}));
 			}
+
+			// Did player enter all colors correctly
+			if (arraysMatch(playerSeries, gameSeries)) {
+				setPlayerSeries((prevState) => []);
+				setGameState((prevState) => ({
+					...prevState,
+					playerError: false,
+					playerIndex: 0,
+					playerTurn: !prevState.playerTurn,
+					count: prevState.count + 1,
+				}));
+			}
 		}
-	}, [gameState]);
+	}, [playerSeries]);
 
 	return (
 		<div className="wrapper">
 			<ControlPanel
 				setGameState={setGameState}
 				gameState={gameState}
+				setGameSeries={setGameSeries}
+				setPlayerSeries={setPlayerSeries}
 			></ControlPanel>
 			<div className="game-container">
 				{["green", "red", "yellow", "blue"].map((color) => {
