@@ -27,16 +27,17 @@ li {
 	width: 100vw;
 	display: flex;
 	background-color: var(--navbar-color);
-	justify-content: center;
+	/* justify-content: center; */
 }
 
 .navbar__logo {
+	margin: 0 auto;
 }
 
 .navigation {
 	display: flex;
 	align-items: center;
-	justify-self: end;
+	margin-left: auto;
 }
 
 .navbar__search-icon {
@@ -78,13 +79,25 @@ li {
 }
 
 .header__rank {
-	margin-right: auto;
+	width: 5%;
+	text-align: center;
 }
 
 .header__topic {
-	margin-right: auto;
+	width: 80%;
 }
 
 .header__replies {
-	justify-content: end;
+	width: 5%;
+	text-align: center;
+}
+
+.header__views {
+	width: 5%;
+	text-align: center;
+}
+
+.header__activity {
+	width: 5%;
+	text-align: center;
 }
