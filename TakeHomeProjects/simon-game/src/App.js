@@ -3,6 +3,14 @@ import ControlPanel from "./components/ControlPanel";
 import Button from "./components/Button";
 import "./App.css";
 
+let timer;
+const audio = {
+	green: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
+	red: " https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
+	yellow: " https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
+	blue: " https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
+};
+
 function App() {
 	const greenButton = useRef();
 	const redButton = useRef();
@@ -29,23 +37,9 @@ function App() {
 		playerIndex: 0,
 		playerError: false,
 	});
-	const [audio, setAudio] = useState({
-		green: "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3",
-		red: " https://s3.amazonaws.com/freecodecamp/simonSound2.mp3",
-		yellow: " https://s3.amazonaws.com/freecodecamp/simonSound3.mp3",
-		blue: " https://s3.amazonaws.com/freecodecamp/simonSound4.mp3",
-	});
 	const [playerSeries, setPlayerSeries] = useState([]);
-	const [gameSeries, setGameSeries] = useState([
-		// "green",
-		// "blue",
-		// "yellow",
-		// "blue",
-		// "blue",
-		// "red",
-		// "red",
-	]);
-	const playerInput = useRef(0);
+	const [gameSeries, setGameSeries] = useState([]);
+	const oldPlayerSeries = useRef(0);
 
 	let arraysMatch = function (arr1, arr2) {
 		if (arr1.length !== arr2.length) return false;
@@ -125,6 +119,28 @@ function App() {
 							};
 						});
 					}
+					// set a timout for inactivity
+					timer = setTimeout(() => {
+						if (gameState.strict) {
+							setPlayerSeries((prevState) => Array(0));
+							setGameSeries([]);
+							setGameState((prevState) => ({
+								...prevState,
+								count: 0,
+								playerError: true,
+								playerIndex: 0,
+								playerTurn: !prevState.playerTurn,
+							}));
+						} else {
+							setPlayerSeries((prevState) => []);
+							setGameState((prevState) => ({
+								...prevState,
+								playerError: true,
+								playerIndex: 0,
+								playerTurn: !prevState.playerTurn,
+							}));
+						}
+					}, 7000);
 				}
 			}, 1500 * (i + 1) + delay);
 		}
@@ -146,14 +162,10 @@ function App() {
 
 	useEffect(() => {
 		if (gameState.playerTurn) {
-			// set a timout for inactivity
-			// let timer = setTimeout(() => {
-			// 	alert("aYYY WHat up");
-			// }, 2000);
-
+			clearInterval(timer);
 			// Check if count is 20
 			if (gameState.count === 20) {
-				alert("You won");
+				alert("you won");
 			}
 
 			// Increase playerIndex by one
@@ -162,8 +174,6 @@ function App() {
 				playerIndex: prevState.playerIndex + 1,
 			}));
 
-			playerInput.current = playerInput.current + 1;
-
 			// Runs everytime player presses button when players turn
 
 			// did player enter color correctly
@@ -171,13 +181,7 @@ function App() {
 				gameSeries[gameState.playerIndex] ===
 				playerSeries[gameState.playerIndex]
 			) {
-				console.log("correct");
-				// clearTimeout(timer);
-			}
-			// STRICT MODE
-			else if (gameState.strict) {
-				console.log("INCORRECT");
-				// clearTimeout(timer);
+			} else if (gameState.strict) {
 				setPlayerSeries((prevState) => Array(0));
 				setGameSeries([]);
 				setGameState((prevState) => ({
@@ -196,7 +200,6 @@ function App() {
 					playerTurn: !prevState.playerTurn,
 				}));
 			}
-
 			// Did player enter all colors correctly
 			if (arraysMatch(playerSeries, gameSeries)) {
 				setPlayerSeries((prevState) => []);
