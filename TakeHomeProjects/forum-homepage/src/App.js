@@ -2,24 +2,14 @@ import React, { useState, useEffect } from "react";
 import fetchLatestPosts from "./api/PostsAPI";
 import Post from "./components/Post";
 import "./App.css";
-import Sidebar from "./components/Sidebar";
+import Menu from "./components/Menu";
+import Search from "./components/Search";
 
 function App() {
 	const [posts, setPosts] = useState([]);
-
-	const toggleDarkMode = () => {
-		let root = document.documentElement;
-		// light mode
-		root.style.setProperty("--navbar-color", "#0a0a23");
-		root.style.setProperty("--main-color", "white");
-		root.style.setProperty("--font-color-post", "black");
-		root.style.setProperty("--font-color-header", "#616271");
-		// dark mode
-		// root.style.setProperty("--navbar-color", "#0a0a23");
-		// root.style.setProperty("--main-color", "#313146");
-		// root.style.setProperty("-font-color-post", "#d6d7da");
-		// root.style.setProperty("-font-color-header", "#616271");
-	};
+	const [searchTerm, setSearchTerm] = useState("");
+	const [displayMenu, setDisplayMenu] = useState(false);
+	const [displaySearch, setDisplaySearch] = useState(false);
 
 	useEffect(() => {
 		fetchLatestPosts().then((data) => {
@@ -37,16 +27,27 @@ function App() {
 					alt="The freeCodeCamp Forum"
 				></img>
 				<ul className="navigation">
-					<li className="navbar__search-icon">
+					<li
+						className="navbar__search-icon"
+						onClick={() => {
+							setDisplayMenu(false);
+							setDisplaySearch(!displaySearch);
+						}}
+					>
 						<i className="fas fa-search fa-2x"></i>
 					</li>
 					<li
 						className="navbar__menu-icon"
-						onClick={() => toggleDarkMode()}
+						onClick={() => {
+							setDisplaySearch(false);
+							setDisplayMenu(!displayMenu);
+						}}
 					>
 						<i className="fas fa-bars fa-2x"></i>
 					</li>
 				</ul>
+				{<Menu displayMenu={displayMenu}></Menu>}
+				{<Search displaySearch={displaySearch}></Search>}
 			</nav>
 			<main className="wrapper">
 				<div className="posts-container">
