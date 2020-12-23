@@ -31,7 +31,6 @@ async function fetchLatestPosts() {
 	}
 
 	posts.sort((a, b) => a.activity - b.activity);
-	console.log(posts);
 	return posts;
 }
 
@@ -40,9 +39,7 @@ export default fetchLatestPosts;
 const calculateActivity = (created_at, last_posted_at) => {
 	let createDate = new Date();
 	let lastPostedDate = new Date(last_posted_at);
-	console.log({ createDate, lastPostedDate });
 	const diffTime = Math.abs(lastPostedDate - createDate);
 	const diffMinutes = Math.ceil(diffTime / (1000 * 60));
-	console.log(diffMinutes);
 	return diffMinutes;
 };
