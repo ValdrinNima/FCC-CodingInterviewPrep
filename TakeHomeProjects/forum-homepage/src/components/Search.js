@@ -1,7 +1,12 @@
 import React from "react";
 
-function Search({ displaySearch }) {
-	const [searchTerm, setSearchTerm] = React.useState("");
+function Search({ displaySearch, setSearchTerm, searchTerm }) {
+	const [input, setInput] = React.useState("");
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+		setSearchTerm(input);
+	};
 
 	return (
 		<div
@@ -11,10 +16,10 @@ function Search({ displaySearch }) {
 					: "search-container"
 			}
 		>
-			<form onSubmit={() => console.log("ehlo")} className="search-form">
+			<form onSubmit={onSubmit} className="search-form">
 				<input
 					onChange={(e) => {
-						setSearchTerm(e.target.value);
+						setInput(e.target.value.toLowerCase());
 					}}
 					className="search-field"
 					type="text"

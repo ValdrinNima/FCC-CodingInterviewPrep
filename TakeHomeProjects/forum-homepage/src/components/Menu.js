@@ -3,16 +3,22 @@ import React from "react";
 const Menu = (props) => {
 	const [darkMode, setDarkMode] = React.useState(true);
 
-	const toggleDarkMode = () => {
+	const changeToLight = () => {
 		let root = document.documentElement;
-		// light mode
+
 		if (darkMode) {
+			// light mode
 			root.style.setProperty("--navbar-color", "#0a0a23");
 			root.style.setProperty("--main-color", "white");
 			root.style.setProperty("--font-color-post", "black");
 			root.style.setProperty("--font-color-header", "#616271");
 			setDarkMode(!darkMode);
-		} else {
+		}
+	};
+
+	const changeToDark = () => {
+		let root = document.documentElement;
+		if (!darkMode) {
 			// dark mode
 			root.style.setProperty("--navbar-color", "#0a0a23");
 			root.style.setProperty("--main-color", "#313146");
@@ -21,7 +27,6 @@ const Menu = (props) => {
 			setDarkMode(!darkMode);
 		}
 	};
-
 	return (
 		<div
 			className={
@@ -49,7 +54,7 @@ const Menu = (props) => {
 				<li
 					className="menu-button"
 					onClick={() => {
-						toggleDarkMode();
+						changeToDark();
 					}}
 				>
 					Dark Mode
@@ -57,7 +62,7 @@ const Menu = (props) => {
 				<li
 					className="menu-button"
 					onClick={() => {
-						toggleDarkMode();
+						changeToLight();
 					}}
 				>
 					Light Mode

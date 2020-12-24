@@ -11,6 +11,17 @@ function App() {
 	const [displayMenu, setDisplayMenu] = useState(false);
 	const [displaySearch, setDisplaySearch] = useState(false);
 
+	const filterPosts = () => {
+		let result = posts.filter((post) => {
+			if (post.title.toLowerCase().includes(searchTerm)) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		return result;
+	};
+
 	useEffect(() => {
 		fetchLatestPosts().then((data) => {
 			setPosts(data);
@@ -47,9 +58,21 @@ function App() {
 					</li>
 				</ul>
 				{<Menu displayMenu={displayMenu}></Menu>}
-				{<Search displaySearch={displaySearch}></Search>}
+				{
+					<Search
+						displaySearch={displaySearch}
+						setSearchTerm={setSearchTerm}
+						searchTerm={searchTerm}
+					></Search>
+				}
 			</nav>
-			<main className="wrapper">
+			<main
+				className="wrapper"
+				onClick={() => {
+					setDisplayMenu(false);
+					setDisplaySearch(false);
+				}}
+			>
 				<div className="posts-container">
 					<div className="post-container__header">
 						<ul className="header">
@@ -62,18 +85,31 @@ function App() {
 						</ul>
 					</div>
 					<div>
-						{posts.map((post, index) => (
-							<Post
-								rank={index}
-								key={post.id}
-								id={post.id}
-								title={post.title}
-								replies={post.replies}
-								views={post.views}
-								activity={post.activity}
-								posters={post.posters}
-							></Post>
-						))}
+						{!searchTerm
+							? posts.map((post, index) => (
+									<Post
+										rank={index}
+										key={index}
+										id={post.id}
+										title={post.title}
+										replies={post.replies}
+										views={post.views}
+										activity={post.activity}
+										posters={post.posters}
+									></Post>
+							  ))
+							: filterPosts(posts).map((post, index) => (
+									<Post
+										rank={index}
+										key={index}
+										id={post.id}
+										title={post.title}
+										replies={post.replies}
+										views={post.views}
+										activity={post.activity}
+										posters={post.posters}
+									></Post>
+							  ))}
 					</div>
 				</div>
 			</main>

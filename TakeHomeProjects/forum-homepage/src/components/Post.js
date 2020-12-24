@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Post({ rank, id, slug, title, replies, posters, views, activity }) {
 	const formatTime = (minutes) => {
@@ -21,7 +21,7 @@ function Post({ rank, id, slug, title, replies, posters, views, activity }) {
 					</a>
 				</li>
 				<li className="post-item-posters">
-					{posters.map((poster) => {
+					{posters.map((poster, index) => {
 						const size = 30;
 						let avatarURL = `https://sjc1.discourse-cdn.com/freecodecamp/user_avatar/forum.freecodecamp.org/${poster.username}/${size}/149850_2.png`;
 						return (
