@@ -6,10 +6,15 @@ function RecipeWindow({
 	recipe,
 	setRecipeList,
 	setSelectedRecipe,
+	showAdder,
+	setShowAdder,
+	setShowEditor,
+	showEditor,
 }) {
 	useEffect(() => {}, [selectedRecipe]);
 
 	const deleteRecipe = () => {
+		alert("Are you want to delete this from the recipe box");
 		setRecipeList((prevState) => {
 			let newState = prevState.filter((deleteRecipe) =>
 				recipe.name === deleteRecipe.name ? false : true
@@ -21,7 +26,13 @@ function RecipeWindow({
 		});
 	};
 
-	const editRecipe = () => {};
+	const editRecipe = () => {
+		setShowEditor(!showEditor);
+	};
+
+	const addRecipe = () => {
+		setShowAdder(!showAdder);
+	};
 
 	return (
 		<div className="recipewindow-container">
@@ -30,11 +41,11 @@ function RecipeWindow({
 				<div>
 					<i
 						onClick={() => deleteRecipe()}
-						className="fas fa-trash fa-2x"
+						className="fas fa-trash fa-1x"
 					></i>
 					<i
 						onClick={() => editRecipe()}
-						className="fas fa-edit fa-2x"
+						className="fas fa-edit fa-1x"
 					></i>
 				</div>
 			</div>
@@ -48,16 +59,19 @@ function RecipeWindow({
 						: ""}
 				</ul>
 				<h3>Directions</h3>
-				<ul className="recipe-directions">
+				<ol className="recipe-directions">
 					{recipe
 						? recipe.directions.map((directions, ind) => (
 								<li key={ind}>{directions}</li>
 						  ))
 						: ""}
-				</ul>
+				</ol>
 			</div>
 			<div className="recipewindow-footer">
-				<i className="fas fa-plus-square fa-2x"></i>
+				<i
+					onClick={() => addRecipe()}
+					className="fas fa-plus-square fa-2x"
+				></i>
 			</div>
 		</div>
 	);

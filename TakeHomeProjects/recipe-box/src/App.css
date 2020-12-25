@@ -9,9 +9,136 @@ body {
 }
 
 .header-title {
-  animation: fade-in 2s linear;
+	animation: fade-in 2s linear;
 }
 
+/* **** APP **** */
+.wrapper {
+	margin: 0 auto;
+	width: 70%;
+	max-width: 1500px;
+	background-color: aliceblue;
+}
+
+.header-container {
+	padding: 1em;
+	margin: 0 auto;
+	width: 100%;
+	border: 1px solid black;
+}
+
+.header-title {
+	text-align: center;
+}
+
+.main-container {
+	height: 100vh;
+	display: flex;
+	justify-content: space-between;
+}
+
+.footer-container {
+	height: 100px;
+	text-align: center;
+	width: 100vw;
+	background-color: darkblue;
+	padding: 2em;
+}
+
+/* **** RECIPE INDEX */
+
+.recipelist-container {
+	width: 30%;
+	margin: 2em 0 0;
+}
+
+.recipelist-list {
+	list-style: none;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 1em;
+}
+
+.recipelist-item {
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 1em;
+	text-align: center;
+	margin-bottom: 0.3em;
+}
+
+.recipelist-item:hover {
+	opacity: 0.6;
+}
+
+/* **** RECIPEWINDOW **** */
+
+.recipewindow-container {
+	width: 65%;
+	height: 500px;
+	margin: 2em 0 0;
+	border: 1px solid black;
+}
+
+.recipewindow-header {
+	border-bottom: 1px solid black;
+	font-size: 1.4rem;
+	display: flex;
+	height: 15%;
+}
+
+.recipewindow-header {
+	padding-left: 1em;
+	display: flex;
+	align-items: center;
+	justify-content: right;
+}
+
+.recipe-text {
+	padding: 2em;
+	margin-bottom: 2em;
+	height: 70%;
+}
+
+.recipe-text > h3 {
+	font-size: 1.4rem;
+}
+
+.recipe-text > ul + h3 {
+	margin: 1em 0 0;
+}
+.recipe-ingredients {
+	padding: 0 0 0 2em;
+	margin: 1em 0 0;
+}
+
+.recipe-directions {
+	margin: 1em 0 0;
+	padding: 0 0 0 2em;
+}
+
+.recipewindow-footer {
+	border-top: 1px solid black;
+	height: 10%;
+}
+
+/* **** RECIPE EDITRO **** */
+
+.recipeeditor-wrapper {
+	position: relative;
+	height: 100vh;
+	width: 100vw;
+	backdrop-filter: grayscale(1);
+}
+
+.recipeeditor-container {
+	position: absolute;
+	width: 500px;
+	height: 700px;
+	background-color: white;
+}
+
+/* **** ANIMATION **** */
 
 @keyframes fade-in {
 	from {
