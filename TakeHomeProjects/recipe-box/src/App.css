@@ -8,83 +8,94 @@ body {
 	font-family: "Lora", serif;
 }
 
-.header-title {
-	animation: fade-in 2s linear;
-}
-
 /* **** APP **** */
 .wrapper {
 	margin: 0 auto;
 	width: 70%;
 	max-width: 1500px;
-	background-color: aliceblue;
 }
 
 .header-container {
 	padding: 1em;
 	margin: 0 auto;
 	width: 100%;
-	border: 1px solid black;
 }
 
 .header-title {
+	font-size: 3rem;
 	text-align: center;
 }
 
 .main-container {
-	height: 100vh;
+	background: url(https://i.pinimg.com/originals/6b/e1/84/6be1847b56e3832a614699142d1e09d8.jpg);
+	background-size: cover;
+	border-radius: 10px;
+	height: 80vh;
 	display: flex;
-	justify-content: space-between;
-}
-
-.footer-container {
-	height: 100px;
-	text-align: center;
-	width: 100vw;
-	background-color: darkblue;
-	padding: 2em;
+	justify-content: space-evenly;
 }
 
 /* **** RECIPE INDEX */
 
 .recipelist-container {
+	background: url(https://wallsheaven.de/fotos/C205211340/220/watercolor-paper-texture-or-background.-seamless-square-texture.-tile-ready..webp);
+	background-size: cover;
 	width: 30%;
 	margin: 2em 0 0;
+	overflow: auto;
+	height: 90%;
+	border-radius: 10px;
 }
 
 .recipelist-list {
 	list-style: none;
-	border: 1px solid black;
-	border-radius: 5px;
+	border-radius: 10px;
 	padding: 1em;
+}
+
+.recipelist-item:first-child {
+	border-top: 1px solid rgba(0, 0, 0, 0.231);
 }
 
 .recipelist-item {
-	border: 1px solid black;
-	border-radius: 5px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.231);
 	padding: 1em;
 	text-align: center;
-	margin-bottom: 0.3em;
 }
 
 .recipelist-item:hover {
-	opacity: 0.6;
+	opacity: 0.8;
+	font-weight: bold;
 }
 
 /* **** RECIPEWINDOW **** */
 
 .recipewindow-container {
+	background: url(https://wallsheaven.de/fotos/C205211340/220/watercolor-paper-texture-or-background.-seamless-square-texture.-tile-ready..webp);
+	background-size: cover;
+	border-radius: 10px;
 	width: 65%;
-	height: 500px;
+	height: 90%;
 	margin: 2em 0 0;
-	border: 1px solid black;
 }
 
 .recipewindow-header {
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.374);
 	font-size: 1.4rem;
 	display: flex;
 	height: 15%;
+}
+
+.button-container {
+	margin-left: 1em;
+}
+
+.button-container > i {
+	margin-left: 0.5em;
+}
+
+i:hover {
+	cursor: pointer;
 }
 
 .recipewindow-header {
@@ -118,33 +129,110 @@ body {
 }
 
 .recipewindow-footer {
-	border-top: 1px solid black;
+	border-top: 1px solid rgba(0, 0, 0, 0.374);
+	padding: 0.2em 0 0 1em;
 	height: 10%;
 }
 
 /* **** RECIPE EDITRO **** */
 
 .recipeeditor-wrapper {
-	position: relative;
-	height: 100vh;
-	width: 100vw;
-	backdrop-filter: grayscale(1);
+	/* display: none;  */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 .recipeeditor-container {
-	position: absolute;
-	width: 500px;
-	height: 700px;
-	background-color: white;
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 40%; /* Could be more or less, depending on screen size */
+	text-align: center;
+	border-radius: 10px;
 }
 
-/* **** ANIMATION **** */
+.recipeeditor-container h2 {
+	margin-bottom: 1em;
+}
 
-@keyframes fade-in {
-	from {
-		opacity: 0;
+.recipeeditor-container h3 {
+	margin: 1.3em 0 0.7rem;
+}
+
+.recipeeditor-container textarea {
+	width: 70%;
+	height: 100px;
+}
+
+.recipeeditor-title {
+	height: 20px !important;
+}
+
+.recipeeditor-buttons {
+	margin: 1em 0 0;
+}
+.recipeeditor-buttons button {
+	font-family: "Lora";
+	padding: 1em;
+	font-weight: bold;
+	margin: 0 1em 0;
+	border-radius: 10px;
+
+	border: 0px;
+	background-color: rgb(198, 187, 187);
+}
+/* **** MEDIA QUERY **** */
+
+@media (max-width: 850px) {
+	.main-container {
+		flex-direction: column;
+		justify-content: start;
+		align-self: center;
+		height: 1100px;
 	}
-	to {
-		opacity: 1;
+
+	.recipelist-container {
+		margin: 1em auto;
+		width: 40%;
+		min-width: 300px;
+	}
+
+	.recipewindow-container {
+		margin: 2em auto;
+		width: 80%;
+		min-width: 300px;
+	}
+}
+
+@media (max-width: 500px) {
+	.wrapper {
+		width: 90%;
+	}
+
+	.main-container {
+		flex-direction: column;
+		justify-content: start;
+		align-self: center;
+		height: 1100px;
+	}
+
+	.recipelist-container {
+		margin: 1em auto;
+		width: 40%;
+		min-width: 300px;
+	}
+
+	.recipewindow-container {
+		margin: 2em auto;
+		width: 80%;
+		min-width: 300px;
 	}
 }

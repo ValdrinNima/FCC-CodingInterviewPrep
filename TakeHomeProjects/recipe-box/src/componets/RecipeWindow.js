@@ -38,7 +38,7 @@ function RecipeWindow({
 		<div className="recipewindow-container">
 			<div className="recipewindow-header">
 				<h2>{recipe ? recipe.name : ""}</h2>
-				<div>
+				<div className="button-container">
 					<i
 						onClick={() => deleteRecipe()}
 						className="fas fa-trash fa-1x"

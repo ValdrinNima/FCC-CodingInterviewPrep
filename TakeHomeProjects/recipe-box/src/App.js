@@ -67,27 +67,27 @@ function App() {
 
 	return (
 		<>
+			{showEditor && (
+				<RecipeEditor
+					recipe={getRecipeFromList(selectedRecipe)}
+					recipeList={recipeList}
+					setShowEditor={setShowEditor}
+					setRecipeList={setRecipeList}
+					setSelectedRecipe={setSelectedRecipe}
+				></RecipeEditor>
+			)}
+			{showAdder && (
+				<RecipeAdder
+					setSelectedRecipe={setSelectedRecipe}
+					recipeList={recipeList}
+					setShowAdder={setShowAdder}
+					setRecipeList={setRecipeList}
+				></RecipeAdder>
+			)}
 			<div className="wrapper">
 				<header className="header-container">
-					<h1 className="header-title">Hello World</h1>
+					<h1 className="header-title">Recipe Box</h1>
 				</header>
-				{showEditor && (
-					<RecipeEditor
-						recipe={getRecipeFromList(selectedRecipe)}
-						recipeList={recipeList}
-						setShowEditor={setShowEditor}
-						setRecipeList={setRecipeList}
-						setSelectedRecipe={setSelectedRecipe}
-					></RecipeEditor>
-				)}
-				{showAdder && (
-					<RecipeAdder
-						setSelectedRecipe={setSelectedRecipe}
-						recipeList={recipeList}
-						setShowAdder={setShowAdder}
-						setRecipeList={setRecipeList}
-					></RecipeAdder>
-				)}
 				<main className="main-container">
 					<RecipeIndex
 						setRecipeList={setRecipeList}
@@ -107,9 +107,6 @@ function App() {
 					></RecipeWindow>
 				</main>
 			</div>
-			<footer className="footer-container">
-				<h3>Made by Valdrin</h3>
-			</footer>
 		</>
 	);
 }

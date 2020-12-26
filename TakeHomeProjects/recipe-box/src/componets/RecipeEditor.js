@@ -57,6 +57,7 @@ function RecipeEditor({
 				<form onSubmit={(e) => handleSubmit(e)}>
 					<h3>Recipe</h3>
 					<textarea
+						className="recipeeditor-title"
 						value={newTitle}
 						onChange={(e) => {
 							setNewTitle(e.target.value);
@@ -76,7 +77,7 @@ function RecipeEditor({
 							setNewDirections(formatInput(e.target.value));
 						}}
 					></textarea>
-					<div>
+					<div className="recipeeditor-buttons">
 						<button type="submit">Save</button>
 						<button
 							onClick={() => {

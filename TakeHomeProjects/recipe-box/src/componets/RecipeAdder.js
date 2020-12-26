@@ -46,46 +46,52 @@ function RecipeAdder({
 	};
 
 	return (
-		<div>
-			<h2>Add Recipe</h2>
-			{/* <i className="fas fa-times fa-2x"></i> */}
-			<form onSubmit={(e) => handleSubmit(e)}>
-				<h3>Recipe</h3>
-				<textarea
-					placeholder="Recipe Name"
-					onChange={(e) => {
-						setNewTitle(e.target.value);
-					}}
-				></textarea>
-				<h3>Ingredients</h3>
-				<textarea
-					placeholder={
-						"Prepend each ingredient with a '-' and seperate with a new line\n\n-Milk↩\n-Eggs↩"
-					}
-					onChange={(e) => {
-						setNewIngredients(formatInput(e.target.value));
-					}}
-				></textarea>
-				<h3>Directions</h3>
-				<textarea
-					placeholder={
-						"Prepend each direction with a '-' and seperate with a new line\n\n-Preheat oven...↩\n-Combine ingredients↩"
-					}
-					onChange={(e) => {
-						setNewDirections(formatInput(e.target.value));
-					}}
-				></textarea>
-				<div>
-					<button type="submit">Save</button>
-					<button
-						onClick={() => {
-							setShowAdder(false);
+		<div
+			className="recipeeditor-wrapper"
+			onClick={() => setShowAdder(false)}
+		>
+			<div className="recipeeditor-container">
+				<h2>Add Recipe</h2>
+				{/* <i className="fas fa-times fa-2x"></i> */}
+				<form onSubmit={(e) => handleSubmit(e)}>
+					<h3>Recipe</h3>
+					<textarea
+						className="recipeeditor-title"
+						placeholder="Recipe Name"
+						onChange={(e) => {
+							setNewTitle(e.target.value);
 						}}
-					>
-						Close
-					</button>
-				</div>
-			</form>
+					></textarea>
+					<h3>Ingredients</h3>
+					<textarea
+						placeholder={
+							"Prepend each ingredient with a '-' and seperate with a new line\n\n-Milk↩\n-Eggs↩"
+						}
+						onChange={(e) => {
+							setNewIngredients(formatInput(e.target.value));
+						}}
+					></textarea>
+					<h3>Directions</h3>
+					<textarea
+						placeholder={
+							"Prepend each direction with a '-' and seperate with a new line\n\n-Preheat oven...↩\n-Combine ingredients↩"
+						}
+						onChange={(e) => {
+							setNewDirections(formatInput(e.target.value));
+						}}
+					></textarea>
+					<div className="recipeeditor-buttons">
+						<button type="submit">Add</button>
+						<button
+							onClick={() => {
+								setShowAdder(false);
+							}}
+						>
+							Close
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }
