@@ -15,13 +15,28 @@ body {
 
 .game-container {
 	margin: 0 auto;
-	width: 80%;
-	height: 600px;
+	width: 800px;
 }
 
 .game-window {
-	height: 500px;
-	border: 5px solid grey;
+	height: 480px;
+	outline: 5px solid grey;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.cell {
+	width: 16px;
+	height: 16px;
+	border: 1px solid black;
+}
+
+.alive {
+	background-color: blue;
+}
+
+.dead {
+	background-color: white;
 }
 
 .control-panel {
