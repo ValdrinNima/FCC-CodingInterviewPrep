@@ -1,39 +1,46 @@
 import React, { useState, useEffect } from "react";
 import Cell from "./utils/GoLRules";
+import PatternMenu from "./components/PatternMenu";
+import ControlPanel from "./components/ControlPanel";
+import DataPanel from "./components/DataPanel";
 import "./App.css";
 
-let gameLoop;
+export let gameLoop;
 
 function App() {
-	const [gameState, setGameState] = useState({ isRunning: true, speed: 500 });
+	const [gameState, setGameState] = useState({
+		isRunning: false,
+		speed: 100,
+	});
 	const [generation, setGeneration] = useState(0);
-	const [board, setBoard] = useState([]);
-
-	const generateRandomBoard = (rows = 30, cols = 50) => {
+	const [mouseDown, setMouseDown] = useState(false);
+	const [showPatternMenu, setShowPatternMenu] = useState(false);
+	const [board, setBoard] = useState((rows = 30, cols = 50) => {
 		let board = [];
 		for (let i = 0; i < rows; i++) {
 			board.push([]);
 			for (let j = 0; j < cols; j++) {
-				let randNum = Math.floor(Math.random() * 2);
-				board[i].push(randNum.toString());
+				board[i].push("0");
 			}
 		}
 		return board;
+	});
+
+	const handleOnClick = (row, col) => {
+		setBoard((prevState) => {
+			let newBoard = prevState.map((inner) => inner.slice());
+			newBoard[row][col] = "1";
+			return newBoard;
+		});
 	};
 
-	const generateCleanBoard = (rows = 30, cols = 50) => {
-		let board = [];
-		for (let i = 0; i < rows; i++) {
-			board.push([]);
-			for (let j = 0; j < cols; j++) {
-				if ((i === 2 || i === 3 || i === 4) && j === 2) {
-					board[i].push("1");
-				} else {
-					board[i].push("0");
-				}
-			}
-		}
-		return board;
+	const handleOnMouseOver = (e, row, col) => {
+		e.preventDefault();
+		setBoard((prevState) => {
+			let newBoard = prevState.map((inner) => inner.slice());
+			newBoard[row][col] = "1";
+			return newBoard;
+		});
 	};
 
 	const mainLoop = () => {
@@ -70,12 +77,10 @@ function App() {
 			});
 
 			setGeneration((prevState) => prevState + 1);
-		}, gameState.speed); // TODO: Make this gameState.speed
+		}, gameState.speed);
 	};
 
 	useEffect(() => {
-		setBoard(generateCleanBoard());
-
 		if (gameState.isRunning) {
 			mainLoop();
 		}
@@ -90,6 +95,24 @@ function App() {
 						return row.map((cell, colIndex) => {
 							return (
 								<div
+									disabled={gameState.isRunning}
+									onMouseUp={(e) => setMouseDown(false)}
+									onMouseDown={(e) => {
+										handleOnClick(rowIndex, colIndex);
+										setMouseDown(true);
+									}}
+									onMouseOver={(e) => {
+										if (mouseDown) {
+											handleOnMouseOver(
+												e,
+												rowIndex,
+												colIndex
+											);
+										}
+									}}
+									onClick={() =>
+										handleOnClick(rowIndex, colIndex)
+									}
 									key={colIndex + rowIndex * row.length}
 									id={colIndex + rowIndex * row.length}
 									className={
@@ -102,46 +125,27 @@ function App() {
 						});
 					})}
 				</div>
-				<div className="control-panel">
-					<button
-						onClick={() =>
-							setGameState((prevState) => {
-								clearInterval(gameLoop);
-								return {
-									...prevState,
-									isRunning: !prevState.isRunning,
-								};
-							})
-						}
-						className="btn"
-					>
-						Start
-					</button>
-					<button
-						onClick={() => setBoard(generateRandomBoard())}
-						className="btn"
-					>
-						Randomize
-					</button>
-					<button
-						onClick={() => {
-							setGameState((prevState) => ({
-								...prevState,
-								isRunning: false,
-							}));
-							setBoard(generateCleanBoard());
-						}}
-						className="btn"
-					>
-						Clear Board
-					</button>
-					<button className="btn">Patterns</button>
-				</div>
-				<div className="data-panel">
-					<p>Generation</p>
-					{generation}
-					<p>Speed</p>
-				</div>
+				<ControlPanel
+					setGameState={setGameState}
+					setGeneration={setGeneration}
+					setShowPatternMenu={setShowPatternMenu}
+					setBoard={setBoard}
+				></ControlPanel>
+				<DataPanel
+					setGameState={setGameState}
+					gameState={gameState}
+					setGeneration={setGeneration}
+					generation={generation}
+					setBoard={setBoard}
+				></DataPanel>
+				{showPatternMenu && (
+					<PatternMenu
+						setBoard={setBoard}
+						setGameState={setGameState}
+						setGeneration={setGeneration}
+						setShowPatternMenu={setShowPatternMenu}
+					></PatternMenu>
+				)}
 			</div>
 		</div>
 	);
