@@ -1,0 +1,53 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.title {
+	text-align: center;
+	text-shadow: -2px -2px red;
+	margin: 1em 0 1em;
+}
+
+.gamewindow-container {
+	margin: 0 auto;
+	width: 60%;
+}
+
+.gamewindow-window {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.gamewindow-cell {
+	border: 1px solid black;
+	height: 40px;
+	width: 40px;
+	margin: 0.15em;
+	border-radius: 100%;
+}
+
+/* COLORS */
+
+.red {
+	background-color: red;
+}
+
+/* CONTROL PANEL */
+
+.controlpanel-container {
+	margin: 0 auto;
+	width: 60%;
+}
+
+.controlpanel-button_container {
+	width: 40%;
+	display: flex;
+	padding: 1em;
+	justify-content: space-between;
+}
+
+.footer-text {
+	text-align: center;
+}
