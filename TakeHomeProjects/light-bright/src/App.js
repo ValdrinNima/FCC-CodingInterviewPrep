@@ -6,19 +6,23 @@ import "./App.css";
 
 function App() {
 	const [cells, setCells] = useState([]);
+	const [colorIndex, setColorIndex] = useState(0);
 
 	return (
-		<div>
-			<div className="wrapper">
-				<header>
-					<h1 className="title">Light-Bright App </h1>
-				</header>
-				<GameWindow cells={cells} setCells={setCells}></GameWindow>
-				<ControlPanel></ControlPanel>
-				<footer>
-					<h3 className="footer-text">Made by Valdrin N.</h3>
-				</footer>
-			</div>
+		<div className="wrapper">
+			<header>
+				<h1 className="title">Light-Bright App </h1>
+			</header>
+			<GameWindow
+				cells={cells}
+				setCells={setCells}
+				colorIndex={colorIndex}
+				setColorIndex={setColorIndex}
+			></GameWindow>
+			<ControlPanel
+				setColorIndex={setColorIndex}
+				setCells={setCells}
+			></ControlPanel>
 		</div>
 	);
 }

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Cell from "./Cell";
 
-function GameWindow({ cells, setCells }) {
+const colorList = ["red", "blue", "green"];
+
+function GameWindow({ cells, setCells, setColorIndex, colorIndex }) {
+	const [mouseDown, setMouseDown] = useState(false);
+
 	useEffect(() => {
 		setCells((prevState) => {
 			let result = [];
@@ -14,9 +18,29 @@ function GameWindow({ cells, setCells }) {
 
 	return (
 		<div className="gamewindow-container">
-			<div className="gamewindow-window">
-				{cells.map((cell, ind) => {
-					return <Cell key={ind}></Cell>;
+			<div
+				className="gamewindow-window"
+				onMouseDown={() => {
+					setMouseDown(() => true);
+				}}
+				onMouseUp={() => {
+					setMouseDown(() => false);
+					setColorIndex((prevState) => (prevState + 1) % 3);
+				}}
+			>
+				{cells.map((color, ind) => {
+					return (
+						<Cell
+							cells={cells}
+							setCells={setCells}
+							id={ind}
+							mouseDown={mouseDown}
+							setMouseDown={setMouseDown}
+							setColorIndex={setColorIndex}
+							colorIndex={colorIndex}
+							key={ind}
+						></Cell>
+					);
 				})}
 			</div>
 		</div>

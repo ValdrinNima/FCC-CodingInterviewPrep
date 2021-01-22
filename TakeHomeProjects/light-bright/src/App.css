@@ -4,10 +4,29 @@
 	box-sizing: border-box;
 }
 
+body {
+	font-family: "Teko", sans-serif;
+}
+
+.wrapper {
+	background: linear-gradient(
+		180deg,
+		#0c0b0b,
+		#0c0b0b,
+		#0c0b0b,
+		rgba(89, 3, 181, 0.762),
+		#f80f1f6d
+	);
+}
+
 .title {
 	text-align: center;
-	text-shadow: -2px -2px red;
-	margin: 1em 0 1em;
+	/* text-shadow: 2px 2px #3f01e1; */
+
+	font-size: 4rem;
+	background: linear-gradient(20deg, #f50936, #3f01e1);
+	-webkit-background-clip: text;
+	color: transparent;
 }
 
 .gamewindow-container {
@@ -26,14 +45,25 @@
 	width: 40px;
 	margin: 0.15em;
 	border-radius: 100%;
+	background: radial-gradient(#454345, #171717);
 }
 
 /* COLORS */
 
 .red {
-	background-color: red;
+	background: radial-gradient(#da1616, #222223);
+	box-shadow: 0px 0px 30px #da1616;
 }
 
+.blue {
+	background: radial-gradient(#111ce9, #222223);
+	box-shadow: 0px 0px 30px #111ce9;
+}
+
+.green {
+	background: radial-gradient(#12c928, #222223);
+	box-shadow: 0px 0px 30px #12c928;
+}
 /* CONTROL PANEL */
 
 .controlpanel-container {
@@ -46,8 +76,4 @@
 	display: flex;
 	padding: 1em;
 	justify-content: space-between;
-}
-
-.footer-text {
-	text-align: center;
 }

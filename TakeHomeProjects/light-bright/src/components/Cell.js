@@ -1,35 +1,40 @@
 import React, { useState } from "react";
 
-function Cell() {
-	const [color, setColor] = useState("");
-	const [mouseDown, setMouseDown] = useState(false);
+const colorList = ["red", "blue", "green"];
 
-	const handleOnClick = (e) => {
-		setColor("red");
+function Cell({ cells, setCells, setColorIndex, colorIndex, id, mouseDown }) {
+	const changeColor = (cellIndex) => {
+		setCells((prevState) => {
+			let result = prevState.map((color, ind) =>
+				ind === cellIndex ? colorList[colorIndex] : color
+			);
+			return result;
+		});
 	};
 
-	const handleOnMouseUp = (e) => {
-		setMouseDown((prevState) => false);
-		console.log(mouseDown);
+	const handleOnClick = (e) => {
+		// changeColor(parseInt(e.target.id));
 	};
 
 	const handleOnMouseDown = (e) => {
-		setMouseDown((prevState) => true);
-		setColor("red");
+		changeColor(parseInt(e.target.id));
 	};
 
 	const handleOnMouseOver = (e) => {
 		if (mouseDown) {
-			setColor("red");
+			changeColor(parseInt(e.target.id));
 		}
 	};
+
 	return (
 		<div
-			onClick={(e) => handleOnClick(e)}
-			onMouseDown={(e) => handleOnMouseDown(e)}
+			id={id}
+			// onClick={(e) => handleOnClick(e)}
+			onMouseDown={(e) => {
+				handleOnMouseDown(e);
+			}}
 			onMouseOver={(e) => handleOnMouseOver(e)}
-			onMouseUp={(e) => handleOnMouseUp(e)}
-			className={"gamewindow-cell " + color}
+			className={"gamewindow-cell " + cells[id]}
 		></div>
 	);
 }
